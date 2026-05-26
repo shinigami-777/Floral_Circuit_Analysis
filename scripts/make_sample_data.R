@@ -1,8 +1,4 @@
 # Generate a synthetic EIS spectrum from known floral-circuit parameters
-# Gaussian noise 5%. added, and write data/sample_eis.csv.
-#
-# Run from the project root:    Rscript scripts/make_sample_data.R
-
 source("R/circuit_models.R")
 
 set.seed(42)
@@ -15,11 +11,12 @@ theta_true <- setNames(
   PARAM_NAMES
 )
 
-freq  <- 10^seq(0, 5, length.out = 60)    # 1 Hz to 100 kHz, log-spaced
+# 1 Hz to 100 kHz, log-spaced
+freq  <- 10^seq(0, 5, length.out = 60)
 omega <- 2 * pi * freq
 Z     <- floral_impedance(omega, theta_true)
 
-# Adding som enoise to the data
+# Adding some gaussian noise to the data
 noise_sd <- 0.05 * Mod(Z)
 Z_noisy <- Z + complex(real = rnorm(length(Z), 0, noise_sd),
                        imaginary = rnorm(length(Z), 0, noise_sd))

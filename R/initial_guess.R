@@ -1,12 +1,3 @@
-# Graphical initial-guess routine.
-#
-# In the paper's circuit (Eq. 8/9) the membrane capacitance CM is in
-# series, so Z_shell -> infinity at DC. The DC limit of the full network
-# is therefore set by the vascular bypass: Re(Z) at low f ~ R_S + R_vasc.
-# (The paper's text on p. 4 calls this "R_S + R_E + R_CYT + R_V"; that
-# matches a standard double-shell with CM in parallel, not the equation
-# given. We follow the equation, which is what the model uses.)
-
 initial_guess <- function(freq, Z) {
   omega <- 2 * pi * freq
   Zre   <- Re(Z)

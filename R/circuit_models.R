@@ -1,16 +1,13 @@
 # Floral equivalent circuit impedance model.
 #
-# Implements the petal-specific circuit from Oduniyi (2026), Fig. 2 / Eq. 9:
-#
+# Implements the petal-specific circuit
 #   Z_total(omega) = R_S + Z_CPE(omega) + [ Z_shell(omega) || R_vasc ]
 #
 # where
-#   Z_CPE(omega)   = 1 / ( Q_c * (j*omega)^alpha_c )           # cuticle CPE (Eq. 6)
-#   Z_shell(omega) = R_E + 1/(j*omega*C_M) + R_CYT             # double-shell (Eq. 8)
-#                      + R_V / (1 + j*omega*R_V*C_T)
-#
+#   Z_CPE(omega)   = 1 / ( Q_c * (j*omega)^alpha_c )                                 cuticle CPE
+#   Z_shell(omega) = R_E + 1/(j*omega*C_M) + R_CYT  +  R_V / (1 + j*omega*R_V*C_T)   double shell
 # The parameter vector theta packs all nine fitted values:
-#   theta = c(RS, Qc, alpha_c, RE, CM, RCYT, CT, RV, R_vasc)
+# theta = c(RS, Qc, alpha_c, RE, CM, RCYT, CT, RV, R_vasc)
 
 z_cpe <- function(omega, Qc, alpha_c) {
   1 / (Qc * (1i * omega)^alpha_c)
@@ -25,8 +22,7 @@ z_parallel <- function(Z1, Z2) {
   (Z1 * Z2) / (Z1 + Z2)
 }
 
-# Full floral impedance as a complex vector evaluated at the supplied
-# angular frequencies. `theta` is a named or positional length-9 numeric.
+# Full floral impedance as a complex vector evaluated at the supplied angular frequencies. 
 floral_impedance <- function(omega, theta) {
   RS      <- theta[1]
   Qc      <- theta[2]
@@ -44,7 +40,6 @@ floral_impedance <- function(omega, theta) {
   RS + Zc + Zp
 }
 
-# Names of parameters, kept in one place so UI/fitting/plots agree.
 PARAM_NAMES <- c("RS", "Qc", "alpha_c", "RE", "CM", "RCYT", "CT", "RV", "R_vasc")
 PARAM_UNITS <- c("Ohm", "S*s^a", "-", "Ohm", "F", "Ohm", "F", "Ohm", "Ohm")
 

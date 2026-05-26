@@ -1,10 +1,3 @@
-# Floral Circuit Analysis - Shiny app
-#
-# Upload an EIS spectrum (frequency, Re(Z), Im(Z)), fit the floral
-# equivalent circuit from Oduniyi (2026), and visualise the result.
-#
-# Run from the project root:    Rscript -e 'shiny::runApp(".")'
-
 library(shiny)
 library(ggplot2)
 
